@@ -9,7 +9,7 @@ async function run() {
     const configDir = core.getInput('configDir');
     const mode = core.getInput('mode');
 
-    await tl.execAsync(
+    await exec.exec(
       'sheriff',
       [
         'plan',
