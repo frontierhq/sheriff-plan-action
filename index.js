@@ -20,13 +20,13 @@ async function run() {
         '--subscription-id',
         subscriptionId,
       ],
-      {
-        env: {
-          ...process.env,
-          ...env,
-        },
-        silent: false,
-      },
+      // {
+      //   // env: {
+      //   //   ...process.env,
+      //   //   ...env,
+      //   // },
+      //   silent: false,
+      // },
     );
 
   } catch (err) {
