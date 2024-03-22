@@ -8,6 +8,9 @@ inputs:
   mode:
     description: "Resources or groups"
     required: true
+  subscriptionId:
+    description: "Azure subscription ID"
+    required: true
 branding:
   icon: "archive"
   color: "green"

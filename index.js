@@ -8,6 +8,7 @@ async function run() {
   try {
     const configDir = core.getInput('configDir');
     const mode = core.getInput('mode');
+    const subscriptionId = core.getInput('subscriptionId');
 
     await exec.exec(
       'sheriff',
