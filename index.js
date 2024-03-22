@@ -11,7 +11,7 @@ async function run() {
     const subscriptionId = core.getInput('subscriptionId');
 
     await exec.exec(
-      'sheriff',
+      '/tmp/sheriff/latest/x86_64/sheriff',
       [
         'plan',
         mode,
