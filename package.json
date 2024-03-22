@@ -1,0 +1,36 @@
+{
+  "name": "sheriff-setup-action",
+  "version": "1.0.0",
+  "description": "Install Sheriff in a Github action",
+  "main": "index.js",
+  "scripts": {
+    "test": "run-p test:*",
+    "test:js": "eslint .",
+    "test:unit": "mocha test/unit --recursive --reporter mocha-multi --reporter-options spec=-,mocha-junit-reporter=-"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gofrontier-com/sheriff-setup-action.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gofrontier-com/sheriff-setup-action/issues"
+  },
+  "homepage": "https://github.com/gofrontier-com/sheriff-setup-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/exec": "^1.1.1",
+    "axios": "^1.4.0",
+    "azure-pipelines-task-lib": "^4.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "mocha": "^10.2.0",
+    "mocha-junit-reporter": "^2.2.1",
+    "mocha-multi": "^1.1.7",
+    "npm-run-all": "^4.1.5"
+  }
+}

@@ -1,0 +1,16 @@
+name: "Sheriff Plan"
+description: "Perform a Sheriff plan from GitHub releases"
+author: "Craig Anderson"
+inputs:
+  configDir:
+    description: "location of config files"
+    required: true
+  mode:
+    description: "Resources or groups"
+    required: true
+branding:
+  icon: "archive"
+  color: "green"
+runs:
+  using: "node20"
+  main: "index.js"
