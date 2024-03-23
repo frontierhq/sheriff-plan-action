@@ -20,10 +20,6 @@ Privileged Identity Management (Microsoft Entra PIM) using desired state configu
 Usage
 -----
 
-~~~~~~~~~~~~~~~~~~~
-Sheriff Plan action
-~~~~~~~~~~~~~~~~~~~
-
 This task runs the plan action of Sheriff CLI on the agent. The ``configDir`` input will point to
 the location of the configuration files. The ``mode`` input describes whether Sheriff will perform the actions
 on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscription ID.
@@ -42,12 +38,6 @@ on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscr
         configDir: config/resources
         mode: resources
         subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
-
-.. code:: yaml
-
-  ---
-  subscription:
-    active:
 
 ------------
 Contributing
