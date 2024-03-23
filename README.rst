@@ -24,7 +24,7 @@ This task runs the plan action of Sheriff CLI on the agent. The ``configDir`` in
 the location of the configuration files. The ``mode`` input describes whether Sheriff will perform the actions
 on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscription ID.
 
-.. code:: json
+.. code:: YAML
 
   steps:
     - name: Log in with Azure
