@@ -11,7 +11,7 @@ Sheriff Plan Action
 About
 -----
 
-This is a Github Action that provides an interface to ``plan`` command for
+This is a Github Action that provides an interface to the ``plan`` action for
 `Sheriff <https://github.com/gofrontier-com/sheriff>`_, a command line tool to
 manage Microsoft Entra Privileged Identity Management (Microsoft Entra PIM)
 using desired state configuration.
@@ -21,10 +21,10 @@ Usage
 -----
 
 This task runs the plan action of Sheriff CLI on the agent. The ``configDir`` input will point to
-the location of the configuration files. The ``mode`` input describes whether Sheriff will perform the actions
+the location of the configuration files. The ``mode`` input describes whether Sheriff will perform the plan action
 on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscription ID.
 
-.. code:: YAML
+.. code:: yaml
 
   steps:
     - name: Log in with Azure
@@ -33,7 +33,7 @@ on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscr
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
     - name: Sheriff Plan
-      uses: gofrontier-com/sheriff-plan-action@initial-work
+      uses: gofrontier-com/sheriff-plan-action
       with:
         configDir: config/resources
         mode: resources
