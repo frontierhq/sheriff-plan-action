@@ -43,6 +43,12 @@ on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscr
         mode: resources
         subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
 
+.. code:: yaml
+
+  ---
+  subscription:
+    active:
+
 ------------
 Contributing
 ------------
