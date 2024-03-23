@@ -1,10 +1,3 @@
-.. image:: https://github.com/gofrontier-com/sheriff-plan-action/actions/workflows/ci.yml/badge.svg
-    :target: https://github.com/gofrontier-com/sheriff-plan-action/actions/workflows/ci.yml
-.. image:: https://github.com/gofrontier-com/sheriff-plan-action/actions/workflows/release.yml/badge.svg
-    :target: https://github.com/gofrontier-com/sheriff-plan-action/actions/workflows/release.yml
-
-|
-
 .. image:: logo.png
   :width: 200
   :alt: Sheriff logo
