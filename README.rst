@@ -30,17 +30,18 @@ on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscr
 
 .. code:: yaml
 
-    - name: Log in with Azure
-      uses: azure/login@v1
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+  ---
+  - name: Log in with Azure
+    uses: azure/login@v1
+    with:
+      creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
-    - name: Sheriff Plan
-      uses: gofrontier-com/sheriff-plan-action@initial-work
-      with:
-        configDir: config/resources
-        mode: resources
-        subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
+  - name: Sheriff Plan
+    uses: gofrontier-com/sheriff-plan-action@initial-work
+    with:
+      configDir: config/resources
+      mode: resources
+      subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
 
 ------------
 Contributing
