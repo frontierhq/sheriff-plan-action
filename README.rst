@@ -5,7 +5,7 @@
 
 |
 
-.. image:: images/extension-icon.png
+.. image:: logo.png
   :width: 200
   :alt: Sheriff logo
   :align: center
@@ -33,7 +33,7 @@ Sheriff Plan action
 
 This task runs the plan action of Sheriff CLI on the agent. The ``configDir`` will point to
 the location of the configuration files. Mode describes whether Sheriff will perform the actions
-on ``group`` or ``resources``. The ``subscriptionId`` is the Azure subscription ID.
+on ``groups`` or ``resources``. The ``subscriptionId`` is the Azure subscription ID.
 
 .. code:: yaml
 
@@ -46,7 +46,7 @@ on ``group`` or ``resources``. The ``subscriptionId`` is the Azure subscription 
     uses: gofrontier-com/sheriff-plan-action@initial-work
     with:
       configDir: config/resources
-      mode: azurerm
+      mode: resources
       subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
 
 ------------
