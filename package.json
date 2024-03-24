@@ -1,9 +1,10 @@
 {
-  "name": "sheriff-setup-action",
+  "name": "sheriff-plan-action",
   "version": "1.0.0",
   "description": "Install Sheriff in a Github action",
   "main": "index.js",
   "scripts": {
+    "build": "rm -rf dist && ncc build src/index.js -o dist",
     "test": "run-p test:*",
     "test:js": "eslint .",
     "test:unit": "mocha test/unit --recursive --reporter mocha-multi --reporter-options spec=-,mocha-junit-reporter=-"
