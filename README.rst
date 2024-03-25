@@ -27,6 +27,10 @@ on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscr
 .. code:: yaml
 
   steps:
+  steps:
+    - name: Setup Sheriff
+      uses: gofrontier-com/sheriff-setup-action@main
+
     - name: Log in with Azure
       uses: azure/login@v1
       with:
