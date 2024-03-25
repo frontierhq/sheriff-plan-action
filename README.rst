@@ -33,7 +33,7 @@ on ``groups`` or ``resources``. The ``subscriptionId`` input is the Azure subscr
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
     - name: Sheriff Plan
-      uses: gofrontier-com/sheriff-plan-action
+      uses: gofrontier-com/sheriff-plan-action@v1
       with:
         configDir: config/resources
         mode: resources
