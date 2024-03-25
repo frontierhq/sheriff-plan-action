@@ -1,7 +1,7 @@
 {
   "name": "sheriff-plan-action",
   "version": "1.0.0",
-  "description": "Install Sheriff in a Github action",
+  "description": "Sheriff plan in a Github action",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist && ncc build src/index.js -o dist",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gofrontier-com/sheriff-setup-action.git"
+    "url": "git+https://github.com/gofrontier-com/sheriff-plan-action.git"
   },
   "author": "",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/gofrontier-com/sheriff-setup-action/issues"
+    "url": "https://github.com/gofrontier-com/sheriff-plan-action/issues"
   },
-  "homepage": "https://github.com/gofrontier-com/sheriff-setup-action#readme",
+  "homepage": "https://github.com/gofrontier-com/sheriff-plan-action#readme",
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1"
