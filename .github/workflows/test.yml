@@ -2,9 +2,9 @@ name: Sheriff run npm tests
 
 on:
   push:
-    branches: [test-action]
+    branches: [main]
   pull_request:
-    branches: [test-action]
+    branches: [main]
 
 jobs:
   build:
