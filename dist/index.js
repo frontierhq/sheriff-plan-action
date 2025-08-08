@@ -25933,6 +25933,48 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ 4351:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+
+const core = __nccwpck_require__(2186);
+const exec = __nccwpck_require__(1514);
+
+async function run() {
+  try {
+    const configDir = core.getInput('configDir');
+    const mode = core.getInput('mode');
+    const subscriptionId = core.getInput('subscriptionId');
+
+    await exec.exec(
+      '/tmp/sheriff/latest/x86_64/sheriff',
+      [
+        'plan',
+        mode,
+        configDir ? '--config-dir' : '',
+        configDir,
+        '--subscription-id',
+        subscriptionId,
+      ],
+    );
+  } catch (err) {
+    if (err instanceof Error) {
+      core.setFailed(err.message);
+    } else {
+      core.setFailed('Unknown error');
+    }
+  }
+}
+
+if (require.main === require.cache[eval('__filename')]) {
+  run();
+}
+
+module.exports = { run };
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -27836,43 +27878,12 @@ module.exports = parseParams
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-
-const core = __nccwpck_require__(2186);
-const exec = __nccwpck_require__(1514);
-
-async function run() {
-  try {
-    const configDir = core.getInput('configDir');
-    const mode = core.getInput('mode');
-    const subscriptionId = core.getInput('subscriptionId');
-
-    await exec.exec(
-      '/tmp/sheriff/latest/x86_64/sheriff',
-      [
-        'plan',
-        mode,
-        configDir ? '--config-dir' : '',
-        configDir,
-        '--subscription-id',
-        subscriptionId,
-      ],
-    );
-  } catch (err) {
-    if (err instanceof Error) {
-      core.setFailed(err.message);
-    } else {
-      core.setFailed('Unknown error');
-    }
-  }
-}
-
-run();
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(4351);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
