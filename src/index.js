@@ -34,11 +34,16 @@ async function run() {
     const configDir = core.getInput('configDir');
     const mode = core.getInput('mode');
     const subscriptionId = core.getInput('subscriptionId');
+    const clientId = core.getInput('clientId');
+    const tenantId = core.getInput('tenantId');
+    
 
    const env = {
       AZURE_SUBSCRIPTION_ID: subscriptionId,
+      AZURE_CLIENT_ID: clientId,
+      AZURE_TENANT_ID: tenantId,
    };
-  
+
    // Detect auth scheme: OIDC (federated) or Service Principal
    if (process.env.GITHUB_ACTIONS && process.env.ACTIONS_ID_TOKEN_REQUEST_URL) {
      console.log("Using Workload Identity Federation (GitHub OIDC)...");
