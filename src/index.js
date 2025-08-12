@@ -4,7 +4,7 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const fs = require('fs');
 const path = require('path');
-
+/*
 async function authenticateWithFederatedIdentity(clientId, tenantId, subscriptionId) {
   try {
     const tokenFilePath = path.join(process.env.RUNNER_TEMP || '/tmp', 'azure_federated_token');
@@ -33,19 +33,19 @@ async function authenticateWithFederatedIdentity(clientId, tenantId, subscriptio
     throw err;
   }
 }
-
+*/
 async function run() {
   try {
     const configDir = core.getInput('configDir');
     const mode = core.getInput('mode');
     const subscriptionId = core.getInput('subscriptionId');
-    const clientId = core.getInput('clientId');
+    /*const clientId = core.getInput('clientId');
     const tenantId = core.getInput('tenantId');
     const authScheme = core.getInput('authScheme') || '';
 
    if (authScheme.toLowerCase() === 'workloadidentityfederation') {
       await authenticateWithFederatedIdentity(clientId, tenantId, subscriptionId);
-    }
+    }*/
     await exec.exec(
       '/tmp/sheriff/latest/x86_64/sheriff',
       [
