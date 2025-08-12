@@ -37,26 +37,27 @@ async function run() {
     const clientId = core.getInput('clientId');
     const tenantId = core.getInput('tenantId');
     const env = {
-      AZURE_SUBSCRIPTION_ID: subscriptionId,
       AZURE_CLIENT_ID: clientId,
       AZURE_TENANT_ID: tenantId,
+      AZURE_SUBSCRIPTION_ID: subscriptionId,
     };
-
     // Detect auth scheme: OIDC (federated) or Service Principal
     if (process.env.GITHUB_ACTIONS && process.env.ACTIONS_ID_TOKEN_REQUEST_URL) {
       console.log('Using Workload Identity Federation (GitHub OIDC)...');
-      env.AZURE_CLIENT_ID = process.env.AZURE_CLIENT_ID;
-      env.AZURE_TENANT_ID = process.env.AZURE_TENANT_ID;
+      process.env.AZURE_CLIENT_ID = clientId;
+      process.env.AZURE_TENANT_ID = tenantId;
+      process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
 
       const federatedToken = await getGithubOidcToken();
+      console.log('got OIDC token:', federatedToken);
       const federatedTokenFilePath = path.join(process.env.RUNNER_TEMP || '/tmp', 'azure-identity-token');
       fs.writeFileSync(federatedTokenFilePath, federatedToken);
       env.AZURE_FEDERATED_TOKEN_FILE = federatedTokenFilePath;
     } else if (process.env.AZURE_CLIENT_SECRET) {
       console.log('Using Service Principal with Client Secret...');
-      env.AZURE_CLIENT_ID = process.env.AZURE_CLIENT_ID;
-      env.AZURE_TENANT_ID = process.env.AZURE_TENANT_ID;
-      env.AZURE_CLIENT_SECRET = process.env.AZURE_CLIENT_SECRET;
+      process.env.AZURE_CLIENT_ID = clientId;
+      process.env.AZURE_TENANT_ID = tenantId;
+      process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
     } else {
       throw new Error('No valid Azure authentication method found.');
     }
