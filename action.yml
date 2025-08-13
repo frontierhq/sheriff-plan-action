@@ -11,6 +11,12 @@ inputs:
   subscriptionId:
     description: "Azure subscription ID"
     required: true
+  clientId:
+    description: "Azure client ID"
+    required: false
+  tenantId:
+    description: "Azure tenant ID"
+    required: false
 branding:
   icon: "archive"
   color: "green"
