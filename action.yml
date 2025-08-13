@@ -17,6 +17,9 @@ inputs:
   tenantId:
     description: "Azure tenant ID"
     required: false
+  clientSecret:
+    description: "Azure client secret"
+    required: false
 branding:
   icon: "archive"
   color: "green"
