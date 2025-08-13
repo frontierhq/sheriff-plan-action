@@ -63,6 +63,9 @@ async function run() {
       process.env.AZURE_CLIENT_ID = clientId;
       process.env.AZURE_TENANT_ID = tenantId;
       process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
+      console.log('post process.env.clientId:', process.env.AZURE_CLIENT_ID);
+      console.log('post process.env.subscriptionId:', process.env.AZURE_SUBSCRIPTION_ID);
+      console.log('post process.env.tenantId:', process.env.AZURE_TENANT_ID);
 
       const federatedToken = await getGithubOidcToken();
       console.log('got OIDC token:', federatedToken);
