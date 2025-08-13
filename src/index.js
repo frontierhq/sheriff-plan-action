@@ -4,7 +4,6 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const fs = require('fs');
 const path = require('path');
-// const { execSync } = require("child_process");
 const fetch = require('node-fetch');
 
 async function getGithubOidcToken(audience = 'api://AzureADTokenExchange') {
@@ -37,25 +36,15 @@ async function run() {
     const clientId = core.getInput('clientId');
     const tenantId = core.getInput('tenantId');
     const clientSecret = core.getInput('clientSecret');
-    /* const env = {
-      AZURE_CLIENT_ID: clientId,
-      AZURE_TENANT_ID: tenantId,
-      AZURE_SUBSCRIPTION_ID: subscriptionId,
-      AZURE_CLIENT_SECRET: clientSecret,
-    }; */
+
     process.env.AZURE_CLIENT_ID = clientId;
     process.env.AZURE_TENANT_ID = tenantId;
     process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
-    console.log('clientSecret:', clientSecret);
     process.env.AZURE_CLIENT_SECRET = clientSecret;
-    console.log('process.env.AZURE_CLIENT_SECRET:', process.env.AZURE_CLIENT_SECRET);
-    console.log('process.env.GITHUB_ACTIONS:', process.env.GITHUB_ACTIONS);
-    console.log('process.env.ACTIONS_ID_TOKEN_REQUEST_URL:', process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
     // Detect auth scheme: OIDC (federated) or Service Principal
     if (process.env.GITHUB_ACTIONS && process.env.ACTIONS_ID_TOKEN_REQUEST_URL) {
       console.log('Using Workload Identity Federation (GitHub OIDC)...');
       const federatedToken = await getGithubOidcToken();
-      console.log('got OIDC token:', federatedToken);
       const federatedTokenFilePath = path.join(process.env.RUNNER_TEMP || '/tmp', 'azure-identity-token');
       fs.writeFileSync(federatedTokenFilePath, federatedToken);
       process.env.AZURE_FEDERATED_TOKEN_FILE = federatedTokenFilePath;
@@ -82,7 +71,7 @@ async function run() {
     );
     console.log('Sheriff plan completed successfully');
   } catch (err) {
-    console.error('❌ Error:', err.message);
+    console.error('Error:', err.message);
     process.exit(1);
   }
 }
