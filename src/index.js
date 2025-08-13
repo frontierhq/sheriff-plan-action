@@ -1,31 +1,18 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch');
 
 async function getGithubOidcToken(audience = 'api://AzureADTokenExchange') {
-  const requestToken = process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN;
-  const requestUrl = process.env.ACTIONS_ID_TOKEN_REQUEST_URL;
-
-  if (!requestToken || !requestUrl) {
-    throw new Error('OIDC environment variables are missing. Ensure id-token: write permission is enabled.');
+  try {
+    core.info(`Requesting OIDC token for audience: ${audience}`);
+    const idToken = await core.getIDToken(audience);
+    core.info(`Got OIDC token, length: ${idToken.length}`);
+    return idToken;
+  } catch (err) {
+    throw new Error(`Failed to get OIDC token: ${err.message}`);
   }
-
-  const res = await fetch(`${requestUrl}&audience=${encodeURIComponent(audience)}`, {
-    headers: {
-      Authorization: `Bearer ${requestToken}`,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to get OIDC token: ${res.status} ${await res.text()}`);
-  }
-
-  const { value } = await res.json();
-  return value;
 }
 
 async function run() {
@@ -36,22 +23,38 @@ async function run() {
     const clientId = core.getInput('clientId');
     const tenantId = core.getInput('tenantId');
     const clientSecret = core.getInput('clientSecret');
+    const authScheme = core.getInput('authScheme');
 
     process.env.AZURE_CLIENT_ID = clientId;
     process.env.AZURE_TENANT_ID = tenantId;
     process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
-    process.env.AZURE_CLIENT_SECRET = clientSecret;
+
     // Detect auth scheme: OIDC (federated) or Service Principal
-    if (process.env.GITHUB_ACTIONS && process.env.ACTIONS_ID_TOKEN_REQUEST_URL) {
-      console.log('Using Workload Identity Federation (GitHub OIDC)...');
+    if (authScheme === 'federated') {
+      core.info('Using Workload Identity Federation (GitHub OIDC)...');
+      // Fail fast if mandatory inputs are missing
+      if (!subscriptionId || !clientId || !tenantId) {
+        core.setFailed("Input 'subscriptionId', 'clientId', and 'tenantId' are required.");
+        return;
+      }
       const federatedToken = await getGithubOidcToken();
       const federatedTokenFilePath = path.join(process.env.RUNNER_TEMP || '/tmp', 'azure-identity-token');
-      fs.writeFileSync(federatedTokenFilePath, federatedToken);
+      try {
+        fs.writeFileSync(federatedTokenFilePath, federatedToken);
+      } catch (err) {
+        throw new Error(`Failed to write federated token file: ${err.message}`);
+      }
       process.env.AZURE_FEDERATED_TOKEN_FILE = federatedTokenFilePath;
-    } else if (process.env.AZURE_CLIENT_SECRET) {
-      console.log('Using Service Principal with Client Secret...');
+    } else if (authScheme === 'sp') {
+      core.info('Using Service Principal with Client Secret...');
+      // Fail fast if mandatory inputs are missing
+      if (!subscriptionId || !tenantId || !clientId || !clientSecret) {
+        core.setFailed("Input 'subscriptionId', 'clientId', 'tenantId', and 'clientSecret' are required.");
+        return;
+      }
+      process.env.AZURE_CLIENT_SECRET = clientSecret;
     } else {
-      throw new Error('No valid Azure authentication method found.');
+      throw new Error(`Invalid authScheme '${authScheme}'. Expected 'federated' or 'sp'.`);
     }
     await exec.exec(
       '/tmp/sheriff/latest/x86_64/sheriff',
@@ -69,10 +72,9 @@ async function run() {
         },
       },
     );
-    console.log('Sheriff plan completed successfully');
+    core.info('Sheriff plan completed successfully');
   } catch (err) {
-    console.error('Error:', err.message);
-    process.exit(1);
+    core.setFailed(`Error: ${err.message}`);
   }
 }
 
