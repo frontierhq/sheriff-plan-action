@@ -7,6 +7,11 @@ const path = require('path');
 async function getGithubOidcToken(audience = 'api://AzureADTokenExchange') {
   try {
     core.info(`Requesting OIDC token for audience: ${audience}`);
+    const requestToken = process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN;
+    const requestUrl = process.env.ACTIONS_ID_TOKEN_REQUEST_URL;
+    if (!requestToken || !requestUrl) {
+      throw new Error('OIDC environment variables are missing. Ensure id-token: write permission is enabled.');
+    }
     const idToken = await core.getIDToken(audience);
     core.info(`Got OIDC token, length: ${idToken.length}`);
     return idToken;
