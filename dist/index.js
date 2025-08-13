@@ -29931,31 +29931,28 @@ async function run() {
     const clientId = core.getInput('clientId');
     const tenantId = core.getInput('tenantId');
     const clientSecret = core.getInput('clientSecret');
-    const env = {
+    /* const env = {
       AZURE_CLIENT_ID: clientId,
       AZURE_TENANT_ID: tenantId,
       AZURE_SUBSCRIPTION_ID: subscriptionId,
       AZURE_CLIENT_SECRET: clientSecret,
-    };
+    }; */
+    process.env.AZURE_CLIENT_ID = clientId;
+    process.env.AZURE_TENANT_ID = tenantId;
+    process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
+    process.env.AZURE_CLIENT_SECRET = clientSecret;
     console.log('process.env.GITHUB_ACTIONS:', process.env.GITHUB_ACTIONS);
     console.log('process.env.ACTIONS_ID_TOKEN_REQUEST_URL:', process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
     // Detect auth scheme: OIDC (federated) or Service Principal
     if (process.env.GITHUB_ACTIONS && process.env.ACTIONS_ID_TOKEN_REQUEST_URL) {
       console.log('Using Workload Identity Federation (GitHub OIDC)...');
-      process.env.AZURE_CLIENT_ID = clientId;
-      process.env.AZURE_TENANT_ID = tenantId;
-      process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
       const federatedToken = await getGithubOidcToken();
       console.log('got OIDC token:', federatedToken);
       const federatedTokenFilePath = path.join(process.env.RUNNER_TEMP || '/tmp', 'azure-identity-token');
       fs.writeFileSync(federatedTokenFilePath, federatedToken);
-      env.AZURE_FEDERATED_TOKEN_FILE = federatedTokenFilePath;
+      process.env.AZURE_FEDERATED_TOKEN_FILE = federatedTokenFilePath;
     } else if (process.env.AZURE_CLIENT_SECRET) {
       console.log('Using Service Principal with Client Secret...');
-      process.env.AZURE_CLIENT_ID = clientId;
-      process.env.AZURE_TENANT_ID = tenantId;
-      process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
-      process.env.AZURE_CLIENT_SECRET = clientSecret;
     } else {
       throw new Error('No valid Azure authentication method found.');
     }
@@ -29972,7 +29969,6 @@ async function run() {
       {
         env: {
           ...process.env,
-          ...env,
         },
       },
     );
