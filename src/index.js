@@ -37,24 +37,12 @@ async function run() {
     const clientId = core.getInput('clientId');
     const tenantId = core.getInput('tenantId');
     const clientSecret = core.getInput('clientSecret');
-    console.log('tenantId:', tenantId);
-    console.log('subscriptionId:', subscriptionId);
-    console.log('clientId:', clientId);
-    console.log('clientSecret:', clientSecret ? '***' : 'not provided');
-    console.log('process.env.clientId:', process.env.AZURE_CLIENT_ID);
-    console.log('process.env.subscriptionId:', process.env.AZURE_SUBSCRIPTION_ID);
-    console.log('process.env.tenantId:', process.env.AZURE_TENANT_ID);
-    console.log('process.env.clientSecret:', process.env.AZURE_CLIENT_SECRET);
     const env = {
       AZURE_CLIENT_ID: clientId,
       AZURE_TENANT_ID: tenantId,
       AZURE_SUBSCRIPTION_ID: subscriptionId,
       AZURE_CLIENT_SECRET: clientSecret,
     };
-    console.log('post process.env.clientId:', process.env.AZURE_CLIENT_ID);
-    console.log('post process.env.subscriptionId:', process.env.AZURE_SUBSCRIPTION_ID);
-    console.log('post process.env.tenantId:', process.env.AZURE_TENANT_ID);
-    console.log('post process.env.clientSecret:', process.env.AZURE_CLIENT_SECRET);
     console.log('process.env.GITHUB_ACTIONS:', process.env.GITHUB_ACTIONS);
     console.log('process.env.ACTIONS_ID_TOKEN_REQUEST_URL:', process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
     // Detect auth scheme: OIDC (federated) or Service Principal
@@ -63,10 +51,6 @@ async function run() {
       process.env.AZURE_CLIENT_ID = clientId;
       process.env.AZURE_TENANT_ID = tenantId;
       process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
-      console.log('post process.env.clientId:', process.env.AZURE_CLIENT_ID);
-      console.log('post process.env.subscriptionId:', process.env.AZURE_SUBSCRIPTION_ID);
-      console.log('post process.env.tenantId:', process.env.AZURE_TENANT_ID);
-
       const federatedToken = await getGithubOidcToken();
       console.log('got OIDC token:', federatedToken);
       const federatedTokenFilePath = path.join(process.env.RUNNER_TEMP || '/tmp', 'azure-identity-token');
@@ -77,6 +61,7 @@ async function run() {
       process.env.AZURE_CLIENT_ID = clientId;
       process.env.AZURE_TENANT_ID = tenantId;
       process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
+      process.env.AZURE_CLIENT_SECRET = clientSecret;
     } else {
       throw new Error('No valid Azure authentication method found.');
     }
