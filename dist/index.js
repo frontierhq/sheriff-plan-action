@@ -29940,7 +29940,9 @@ async function run() {
     process.env.AZURE_CLIENT_ID = clientId;
     process.env.AZURE_TENANT_ID = tenantId;
     process.env.AZURE_SUBSCRIPTION_ID = subscriptionId;
+    console.log('clientSecret:', clientSecret);
     process.env.AZURE_CLIENT_SECRET = clientSecret;
+    console.log('process.env.AZURE_CLIENT_SECRET:', process.env.AZURE_CLIENT_SECRET);
     console.log('process.env.GITHUB_ACTIONS:', process.env.GITHUB_ACTIONS);
     console.log('process.env.ACTIONS_ID_TOKEN_REQUEST_URL:', process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
     // Detect auth scheme: OIDC (federated) or Service Principal
