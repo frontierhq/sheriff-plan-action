@@ -43,29 +43,29 @@ Because authentication is handled internally by the Sheriff action, you do not n
         tenantId: '${{ secrets.TENANT_ID }}'
         clientId: '${{ secrets.CLIENT_ID }}'
         clientSecret: '${{ secrets.CLIENT_SECRET }}'
-        authscheme: '${{ secrets.AUTHSCHEME }}'
+        authscheme: 'sp'
 
 ------------
 Input Parameters
 ------------
 
-+----------------+-----------+--------------------------------------------------------------+
-| Name           | Required  | Description                                                  |
-+================+===========+==============================================================+
-| configDir      | Yes       | Path to the Sheriff configuration directory.                 |
-+----------------+-----------+--------------------------------------------------------------+
-| mode           | Yes       | Mode defines whether plan will action on `groups`, `resources` or `entra`. |
-+----------------+-----------+--------------------------------------------------------------+
-| subscriptionId | Yes       | Azure subscription ID to target.                              |
-+----------------+-----------+--------------------------------------------------------------+
-| authScheme     | No        | Default Authentication scheme is `federated`. Allowed values are `federated` or `sp`. |
-+----------------+-----------+--------------------------------------------------------------+
-| clientId       | Yes*      | Application (client) ID of the Service Principal. Required for both federated and sp schemes. |
-+----------------+-----------+--------------------------------------------------------------+
-| tenantId       | Yes*      | Azure AD tenant ID. Required for both federated and sp schemes.  |
-+----------------+-----------+--------------------------------------------------------------+
-| clientSecret   | Yes (sp)  | Service Principal client secret. Required only if authScheme is sp. |
-+----------------+-----------+--------------------------------------------------------------+
++----------------+-----------+----------------------------------------------------------------------------------------------+
+| Name           | Required  | Description                                                                                  |
++================+===========+==============================================================================================+
+| configDir      | Yes       | Path to the Sheriff configuration directory.                                                 |
++----------------+-----------+----------------------------------------------------------------------------------------------+
+| mode           | Yes       | Mode defines whether plan will action on `groups`, `resources` or `entra`.                   |
++----------------+-----------+----------------------------------------------------------------------------------------------+
+| subscriptionId | Yes       | Azure subscription ID to target.                                                             |
++----------------+-----------+----------------------------------------------------------------------------------------------+
+| authScheme     | Optional  | (defaults: federated) Allowed values are `federated` or `sp`.                                |
++----------------+-----------+----------------------------------------------------------------------------------------------+
+| clientId       | Yes*      | Application (client) ID of the Service Principal. Required for both federated and sp schemes.|
++----------------+-----------+----------------------------------------------------------------------------------------------+
+| tenantId       | Yes*      | Azure AD tenant ID. Required for both federated and sp schemes.                              |
++----------------+-----------+----------------------------------------------------------------------------------------------+
+| clientSecret   | Yes (sp)  | Service Principal client secret. Required only if authScheme is sp.                          |
++----------------+-----------+----------------------------------------------------------------------------------------------+
 
 
 Note:
