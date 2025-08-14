@@ -6,11 +6,24 @@ inputs:
     description: "location of config files"
     required: true
   mode:
-    description: "Resources or groups"
+    description: "resources, groups or entra"
     required: true
   subscriptionId:
     description: "Azure subscription ID"
     required: true
+  clientId:
+    description: "Azure client ID"
+    required: true
+  tenantId:
+    description: "Azure tenant ID"
+    required: true
+  clientSecret:
+    description: "Azure client secret"
+    required: false
+  authScheme:
+    description: "Authentication scheme to use: 'federated' for OIDC federated credentials, or 'sp' for Service Principal."
+    required: false
+    default: "federated"
 branding:
   icon: "archive"
   color: "green"
